@@ -8,7 +8,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Main />} />
 
-      <Route path="/:country" element={<Show />} />
+      <Route path="/:id" element={<Show />} />
 
     </Routes>
 

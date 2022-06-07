@@ -58,6 +58,6 @@ export default function Main() {
 
   return (
     <div style={{ width: "80%", margin: "100px auto" }}>
-      <Table columns={columns} dataSource={dataCorona} pagination={false}  rowKey={(dt) => dt.country} /> </div>
+      <Table columns={columns} dataSource={dataCorona} pagination={true}  rowKey={(dt) => dt.country} /> </div>
   )
 }
