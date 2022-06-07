@@ -36,52 +36,33 @@ try {
 
 })
 
-app.post("/api/user", async (req, res) => {
-    const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root', // <== ระบุให้ถูกต้อง
-        password: '1234', // <== ระบุให้ถูกต้อง
-        database: 'final', // <== ระบุ database ให้ถูกต้อง
-        port: 3306, // <== ใส่ port ให้ถูกต้อง (default 3306, MAMP ใช้ 8889)
-
-    })
+app.get("/api/notuser", async (req, res) => {
     try {
-        const { username, password, firstname, lastname, email, mobile_phone } = req.body
-        const check = await connection.execute(
-            `SELECT * FROM user WHERE username = "${username}"`
+        const connection = await mysql.createConnection({
+            host: 'localhost',
+            user: 'root', // <== ระบุให้ถูกต้อง
+            password: '1234', // <== ระบุให้ถูกต้อง
+            database: 'exam', // <== ระบุ database ให้ถูกต้อง
+            port: 3306, // <== ใส่ port ให้ถูกต้อง (default 3306, MAMP ใช้ 8889)
+    
+        })
+    
+        const join = await connection.execute(
+            `SELECT job.id,job.job_name FROM job LEFT JOIN employee ON job.id = employee.job_id WHERE employee.job_id IS NULL;`
         )
-
-        console.log(check[0][0]);
-        if (check[0][0]) {
-            res.json({
-                message: "USERNAME ALREADY",
-                status: ";-;"
-            });
-            res.status(400);
-        }
-        else {
-            await connection.execute(
-                `INSERT INTO user (username ,password , firstname, lastname, email, mobile_phone ) VALUE ("${username}","${password}","${firstname}","${lastname}","${email}","${mobile_phone}")`
-            )
-            res.json({
-                message: "SUCCESS",
-                status: "CREATED"
-            }).status(201);
-
-        }
-
-
-        await connection.end()
-    } catch (error) {
+        await connection.end();
+    
         res.json({
-            message: error,
-            status: ";-;"
-        }).status(200);
-        await connection.end()
+            data : join[0]
+        })
+    
+    } catch (error) {
+        
     }
-
-})
-
+    
+    
+    })
+    
 
 app.listen(3000, () => {
     console.log("SERVER START PORT =====> 3000");
