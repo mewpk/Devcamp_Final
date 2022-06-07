@@ -21,7 +21,7 @@ try {
     })
 
     const join = await connection.execute(
-        `SELECT employee.id,employee.firstname, employee.lastname, job.job_name FROM employee INNER JOIN job ON employee.job_id = job.id;`
+        `SELECT employee.id , employee.firstname , employee.lastname, job.job_name FROM employee INNER JOIN job ON employee.job_id = job.id;`
     )
     await connection.end();
 
