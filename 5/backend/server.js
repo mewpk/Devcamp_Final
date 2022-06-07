@@ -10,34 +10,28 @@ app.use(cors())
 
 
 app.get("/api/user", async (req, res) => {
-
+try {
     const connection = await mysql.createConnection({
         host: 'localhost',
         user: 'root', // <== ระบุให้ถูกต้อง
         password: '1234', // <== ระบุให้ถูกต้อง
-        database: 'final', // <== ระบุ database ให้ถูกต้อง
+        database: 'exam', // <== ระบุ database ให้ถูกต้อง
         port: 3306, // <== ใส่ port ให้ถูกต้อง (default 3306, MAMP ใช้ 8889)
 
     })
-    try {
-        const id = await connection.execute(
-            `SELECT * FROM user WHERE 1`
-        )
-        console.log(id[0][0]);
-        (id[0][0]) ? console.log("have") : console.log("noting");
 
-        res.json({
-            message: id[0],
-            status: "OK"
-        }).status(200);
-        await connection.end()
-    } catch (error) {
-        res.json({
-            message: error,
-            status: ";-;"
-        }).status(200);
-        await connection.end()
-    }
+    const join = await connection.execute(
+        `SELECT employee.id,employee.firstname, employee.lastname, job.job_name FROM employee INNER JOIN job ON employee.job_id = job.id;`
+    )
+    await connection.end();
+
+    res.json({
+        data : join[0]
+    })
+
+} catch (error) {
+    
+}
 
 
 })
