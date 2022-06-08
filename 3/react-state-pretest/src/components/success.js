@@ -2,6 +2,7 @@ const Success = (props) => {
 	const handleBack = () => {
 		// TODO เมื่อกดปุ่ม Back
 		props.isSuccess(false)
+		props.func2([])
 	}
 
 	return (
@@ -17,6 +18,7 @@ const Success = (props) => {
 
 				<p className="my-3 flex flex-wrap justify-center -m-1">
 					{/* Loop email*/}
+					{props.data}
 				</p>
 
 				<p className="text-gray-600 my-2">Thank you for subscribe</p>

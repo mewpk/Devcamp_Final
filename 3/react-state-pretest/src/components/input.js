@@ -12,7 +12,8 @@ const Input = (props) => {
 	const handleSave =  () => {
 		const email = document.querySelector("input").value
 		setInput(email)
-		props.isSuccess(true)
+		props.func(true)
+		props.func2(email)
 		// TODO เมื่อกดปุ่ม Save
 	}
 
